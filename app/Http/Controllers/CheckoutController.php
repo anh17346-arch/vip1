@@ -39,7 +39,26 @@ class CheckoutController extends Controller
     }
 
     /**
-     * Show checkout page for direct product purchase
+     * Show buy now page for GET requests
+     */
+    public function showBuyNow(Request $request, Product $product)
+    {
+        // Get quantity from URL parameter or default to 1
+        $quantity = max(1, min((int) $request->get('quantity', 1), $product->stock));
+        $total = $quantity * $product->final_price;
+
+        // Create a temporary cart item for buy now
+        $cartItem = (object) [
+            'product' => $product,
+            'quantity' => $quantity,
+            'subtotal' => $total
+        ];
+
+        return view('checkout.buy-now', compact('cartItem', 'total', 'product'));
+    }
+
+    /**
+     * Show checkout page for direct product purchase (POST from form)
      */
     public function buyNow(Request $request, Product $product)
     {

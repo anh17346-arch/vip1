@@ -295,6 +295,7 @@ Route::middleware('auth')->group(function () {
     // Checkout routes
     Route::prefix('checkout')->name('checkout.')->group(function () {
         Route::get('/', [App\Http\Controllers\CheckoutController::class, 'index'])->name('index');
+        Route::get('/buy-now/{product}', [App\Http\Controllers\CheckoutController::class, 'showBuyNow'])->name('buy-now.show');
         Route::post('/buy-now/{product}', [App\Http\Controllers\CheckoutController::class, 'buyNow'])->name('buy-now');
         Route::post('/process', [App\Http\Controllers\CheckoutController::class, 'process'])->name('process');
         Route::get('/success/{order}', [App\Http\Controllers\CheckoutController::class, 'success'])->name('success');
