@@ -291,6 +291,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/{cart}/increase', [CartController::class, 'increaseQuantity'])->name('increase');
         Route::post('/{cart}/decrease', [CartController::class, 'decreaseQuantity'])->name('decrease');
     });
+
+    // Checkout routes
+    Route::prefix('checkout')->name('checkout.')->group(function () {
+        Route::get('/', [App\Http\Controllers\CheckoutController::class, 'index'])->name('index');
+        Route::post('/buy-now/{product}', [App\Http\Controllers\CheckoutController::class, 'buyNow'])->name('buy-now');
+        Route::post('/process', [App\Http\Controllers\CheckoutController::class, 'process'])->name('process');
+        Route::get('/success/{order}', [App\Http\Controllers\CheckoutController::class, 'success'])->name('success');
+    });
     
     // Profile management
     Route::prefix('tai-khoan')->name('profile.')->group(function () {
