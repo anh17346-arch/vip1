@@ -133,142 +133,127 @@
                     </div>
                 </div>
 
-                <!-- Compact Product Details -->
-                <div class="backdrop-blur-sm bg-white/30 dark:bg-white/10 rounded-2xl p-4 border border-white/40 dark:border-white/20 shadow-lg">
-                    <h3 class="text-base font-semibold text-slate-900 dark:text-slate-200 mb-3">{{ __('app.product_details') }}</h3>
-                    <div class="grid grid-cols-2 gap-4 text-sm">
-                        <div class="space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="text-slate-500 dark:text-slate-400">{{ __('app.volume') }}</span>
-                                <span class="font-semibold text-slate-900 dark:text-slate-100 bg-blue-50 dark:bg-blue-900/20 px-2 py-1 rounded">{{ $product->volume_ml }}ml</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-slate-500 dark:text-slate-400">{{ __('app.gender') }}</span>
-                                <span class="font-semibold text-slate-900 dark:text-slate-100 bg-purple-50 dark:bg-purple-900/20 px-2 py-1 rounded">
-                                    @switch($product->gender)
-                                        @case('male') {{ __('app.male') }} @break
-                                        @case('female') {{ __('app.female') }} @break
-                                        @default {{ __('app.unisex') }}
-                                    @endswitch
-                                </span>
-                            </div>
-                        </div>
-                        <div class="space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="text-slate-500 dark:text-slate-400">{{ __('app.status') }}</span>
-                                @if($product->stock > 0)
-                                    <span class="font-semibold text-green-600 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded text-xs">
-                                        @if(app()->getLocale() === 'en')
-                                            In stock ({{ $product->stock }})
-                                        @else
-                                            Còn hàng ({{ $product->stock }})
-                                        @endif
-                                    </span>
-                                @else
-                                    <span class="font-semibold text-rose-600 bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded text-xs">{{ __('app.out_of_stock') }}</span>
-                                @endif
-                            </div>
-                            @if($product->origin)
-                                <div class="flex items-center justify-between">
-                                    <span class="text-slate-500 dark:text-slate-400">{{ __('app.origin') }}</span>
-                                    <span class="font-semibold text-slate-900 dark:text-slate-100 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded">{{ $product->origin }}</span>
-                                </div>
-                            @endif
-                        </div>
+                <!-- Essential Product Info -->
+                <div class="flex flex-wrap items-center gap-2 p-3 bg-slate-50/80 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
+                    <!-- Volume -->
+                    <span class="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded text-xs font-medium">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                        </svg>
+                        {{ $product->volume_ml }}ml
+                    </span>
+
+                    <!-- Gender -->
+                    <span class="inline-flex items-center gap-1 px-2 py-1 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 rounded text-xs font-medium">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        @switch($product->gender)
+                            @case('male') Nam @break
+                            @case('female') Nữ @break
+                            @default Unisex
+                        @endswitch
+                    </span>
+
+                    <!-- Stock Status -->
+                    @if($product->stock > 0)
+                        <span class="inline-flex items-center gap-1 px-2 py-1 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded text-xs font-medium">
+                            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                            Còn {{ $product->stock }}
+                        </span>
+                    @else
+                        <span class="inline-flex items-center gap-1 px-2 py-1 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded text-xs font-medium">
+                            <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                            Hết hàng
+                        </span>
+                    @endif
+
+                    <!-- Origin (if exists) -->
+                    @if($product->origin)
+                        <span class="inline-flex items-center gap-1 px-2 py-1 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 rounded text-xs font-medium">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            {{ $product->origin }}
+                        </span>
+                    @endif
+                </div>
+
+                <!-- Mini Stats Section -->
+                <div class="flex items-center justify-between p-3 bg-slate-50/80 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
+                    <!-- Views -->
+                    <div class="flex items-center gap-2">
+                        <svg class="w-3 h-3 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                        <span class="text-xs text-slate-600 dark:text-slate-400">{{ $product->formatted_views }} lượt xem</span>
+                    </div>
+
+                    <!-- Sales -->
+                    <div class="flex items-center gap-2">
+                        <svg class="w-3 h-3 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                        <span class="text-xs text-slate-600 dark:text-slate-400">{{ $product->formatted_sold }} đã bán</span>
                     </div>
                 </div>
 
-                <!-- Compact Stats Section -->
-                <div class="grid grid-cols-2 gap-3">
-                    <!-- Views Stats -->
-                    <div class="backdrop-blur-sm bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-4 border border-blue-100 dark:border-blue-800/30 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
-                        <div class="flex items-center gap-3">
-                            <div class="p-2 bg-blue-100 dark:bg-blue-800/30 rounded-lg">
-                                <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase">Lượt xem</p>
-                                <p class="text-lg font-bold text-blue-800 dark:text-blue-200">{{ $product->formatted_views }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sales Stats -->
-                    <div class="backdrop-blur-sm bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 rounded-xl p-4 border border-emerald-100 dark:border-emerald-800/30 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
-                        <div class="flex items-center gap-3">
-                            <div class="p-2 bg-emerald-100 dark:bg-emerald-800/30 rounded-lg">
-                                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-xs font-medium text-emerald-600 dark:text-emerald-400 uppercase">Đã bán</p>
-                                <p class="text-lg font-bold text-emerald-800 dark:text-emerald-200">{{ $product->formatted_sold }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Compact Action Buttons -->
-                <div class="backdrop-blur-sm bg-white/30 dark:bg-white/10 rounded-2xl p-4 border border-white/40 dark:border-white/20 shadow-lg">
+                <!-- Streamlined Purchase Section -->
+                <div class="space-y-3">
                     @if($product->stock > 0)
                         <form method="POST" action="{{ route('cart.add') }}" class="space-y-3">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                             
-                            <!-- Compact Quantity Selector -->
-                            <div class="flex items-center justify-between">
-                                <label class="text-sm font-medium text-slate-700 dark:text-slate-300">{{ __('app.quantity') }}:</label>
+                            <!-- Inline Quantity & Add to Cart -->
+                            <div class="flex items-center gap-3">
+                                <!-- Quantity -->
                                 <div class="flex items-center bg-slate-100 dark:bg-slate-700 rounded-lg overflow-hidden">
-                                    <button type="button" onclick="changeQuantity(-1)" class="px-2 py-1 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                                    <button type="button" onclick="changeQuantity(-1)" class="px-2 py-2 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
                                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
                                         </svg>
                                     </button>
                                     <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ $product->stock }}"
-                                           class="w-12 text-center border-0 focus:ring-0 bg-transparent text-slate-900 dark:text-slate-100 text-sm">
-                                    <button type="button" onclick="changeQuantity(1)" class="px-2 py-1 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                                           class="w-10 text-center border-0 focus:ring-0 bg-transparent text-slate-900 dark:text-slate-100 text-sm">
+                                    <button type="button" onclick="changeQuantity(1)" class="px-2 py-2 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
                                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                         </svg>
                                     </button>
                                 </div>
-                                <span class="text-xs text-slate-500 dark:text-slate-400">/ {{ $product->stock }}</span>
+                                
+                                <!-- Add to Cart Button -->
+                                <button type="submit" class="flex-1 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg font-medium transition-all duration-300 text-sm">
+                                    🛒 Thêm vào giỏ
+                                </button>
                             </div>
-                            
-                            <!-- Compact Add to Cart Button -->
-                            <button type="submit" class="w-full px-4 py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] text-sm">
-                                🛒 {{ __('app.add_to_cart') }}
-                            </button>
                         </form>
                         
-                        <!-- Secondary Actions -->
-                        <div class="grid grid-cols-2 gap-2 mt-3">
-                            <button class="px-3 py-2 border border-rose-300 text-rose-600 hover:bg-rose-600 hover:text-white rounded-lg font-medium transition-all duration-300 text-xs">
-                                ❤️ {{ __('app.wishlist') }}
+                        <!-- Quick Actions -->
+                        <div class="flex items-center gap-2">
+                            <button class="flex-1 px-3 py-2 border border-rose-300 text-rose-600 hover:bg-rose-50 rounded-lg font-medium transition-all duration-300 text-xs">
+                                ❤️ Yêu thích
                             </button>
-                            <button class="px-3 py-2 border border-blue-300 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg font-medium transition-all duration-300 text-xs">
-                                📤 {{ __('app.share') }}
+                            <button class="flex-1 px-3 py-2 border border-blue-300 text-blue-600 hover:bg-blue-50 rounded-lg font-medium transition-all duration-300 text-xs">
+                                📤 Chia sẻ
                             </button>
                         </div>
                     @else
-                        <button class="w-full px-4 py-3 bg-slate-400 text-white rounded-xl font-semibold cursor-not-allowed text-sm" disabled>
-                            {{ __('app.out_of_stock') }}
+                        <button class="w-full px-4 py-3 bg-slate-400 text-white rounded-lg font-medium cursor-not-allowed text-sm" disabled>
+                            Hết hàng
                         </button>
                     @endif
 
-                    <!-- Compact Stock Warning -->
+                    <!-- Low Stock Alert -->
                     @if($product->stock <= 10 && $product->stock > 0)
-                        <div class="bg-amber-50/80 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3 mt-3">
-                            <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                                </svg>
-                                <span class="text-amber-800 dark:text-amber-200 text-xs font-medium">Chỉ còn {{ $product->stock }} sản phẩm!</span>
-                            </div>
+                        <div class="flex items-center gap-2 p-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+                            <svg class="w-3 h-3 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                            <span class="text-amber-700 dark:text-amber-300 text-xs">Chỉ còn {{ $product->stock }} sản phẩm!</span>
                         </div>
                     @endif
                 </div>
