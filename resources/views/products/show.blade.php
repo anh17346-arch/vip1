@@ -474,7 +474,6 @@ document.addEventListener('keydown', (e) => {
 // Buy Now function
 function buyNow() {
     const quantity = parseInt(document.getElementById('quantity')?.value) || 1;
-    const productId = {{ $product->id }};
     
     // Redirect to buy-now page with quantity in URL
     window.location.href = `{{ route('checkout.buy-now.show', $product->id) }}?quantity=${quantity}`;
