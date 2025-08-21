@@ -19,14 +19,14 @@
         </nav>
 
         <!-- Main Product Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-            <!-- Product Image Gallery - 1 column -->
-            <div class="lg:col-span-1 space-y-6">
-                <!-- Main Image with navigation -->
-                <div class="relative aspect-square overflow-hidden rounded-2xl shadow-2xl border border-white/40 dark:border-white/20">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            <!-- Product Image Gallery - Larger column -->
+            <div class="lg:col-span-1 space-y-4">
+                <!-- Main Image with navigation - Larger size -->
+                <div class="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-2xl border border-white/40 dark:border-white/20 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900">
                     <img id="main-product-image" src="{{ $product->main_image_url }}" 
                          alt="{{ $product->name }}"
-                         class="w-full h-full object-cover cursor-zoom-in transition-transform duration-300 hover:scale-105">
+                         class="w-full h-full object-cover cursor-zoom-in transition-all duration-500 hover:scale-105">
                     
                     <!-- Navigation Arrows -->
                     <button type="button" aria-label="{{ __('app.previous_image') }}" onclick="galleryPrev()" 
@@ -45,7 +45,7 @@
                 
                 <!-- Thumbnail Gallery -->
                 @if($product->has_gallery && ($product->images->count() > 0 || $product->main_image))
-                    <div id="thumbnails" class="grid grid-cols-4 gap-3">
+                    <div id="thumbnails" class="grid grid-cols-5 gap-2">
                         <!-- Main Image Thumbnail -->
                         @if($product->main_image)
                             <button type="button" 
@@ -75,49 +75,54 @@
                 @endif
             </div>
 
-            <!-- Product Info - 2 columns -->
-            <div class="lg:col-span-2 space-y-8">
-                <!-- Header Section -->
-                <div class="space-y-4">
+            <!-- Product Info - Right column -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Compact Header Section -->
+                <div class="backdrop-blur-sm bg-white/40 dark:bg-white/10 rounded-2xl p-6 border border-white/50 dark:border-white/20 shadow-lg space-y-4">
                     <!-- Category & Brand -->
-                    <div class="flex items-center gap-3">
-                        <span class="inline-block px-4 py-2 bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 rounded-full text-sm font-semibold border border-brand-200 dark:border-brand-800/50">
+                    <div class="flex items-center gap-2">
+                        <span class="inline-block px-3 py-1 bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 rounded-full text-xs font-semibold border border-brand-200 dark:border-brand-800/50">
                             {{ $product->category->display_name }}
                         </span>
                         @if($product->brand)
-                            <span class="inline-block px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-600">
+                            <span class="inline-block px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 rounded-full text-xs font-medium border border-slate-200 dark:border-slate-600">
                                 {{ $product->brand }}
+                            </span>
+                        @endif
+                        @if($product->is_on_sale)
+                            <span class="inline-block px-2 py-1 bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 rounded-full text-xs font-bold animate-pulse">
+                                SALE
                             </span>
                         @endif
                     </div>
 
                     <!-- Product Name -->
-                    <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100 leading-tight">{{ $product->display_name }}</h1>
+                    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 leading-tight">{{ $product->display_name }}</h1>
 
                     <!-- Price Section -->
                     <div class="space-y-2">
                         @if($product->is_on_sale)
-                            <div class="flex items-center gap-4">
-                                <span class="text-3xl font-bold text-rose-600">
+                            <div class="flex items-baseline gap-3">
+                                <span class="text-2xl font-bold text-rose-600">
                                     @if(app()->getLocale() === 'en')
                                         ${{ number_format($product->final_price / 25000, 2) }}
                                     @else
                                         {{ number_format($product->final_price, 0, ',', '.') }}đ
                                     @endif
                                 </span>
-                                <span class="text-xl text-slate-400 line-through">
+                                <span class="text-lg text-slate-400 line-through">
                                     @if(app()->getLocale() === 'en')
                                         ${{ number_format($product->price / 25000, 2) }}
                                     @else
                                         {{ number_format($product->price, 0, ',', '.') }}đ
                                     @endif
                                 </span>
-                                <span class="px-4 py-2 bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 rounded-full text-sm font-bold border border-rose-200 dark:border-rose-800/50">
+                                <span class="px-2 py-1 bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 rounded-full text-xs font-bold">
                                     -{{ $product->discount_percentage }}%
                                 </span>
                             </div>
                         @else
-                            <span class="text-3xl font-bold text-slate-900 dark:text-slate-100">
+                            <span class="text-2xl font-bold text-slate-900 dark:text-slate-100">
                                 @if(app()->getLocale() === 'en')
                                     ${{ number_format($product->price / 25000, 2) }}
                                 @else
@@ -128,18 +133,18 @@
                     </div>
                 </div>
 
-                <!-- Product Details Grid -->
-                <div class="backdrop-blur-sm bg-white/30 dark:bg-white/10 rounded-2xl p-6 border border-white/40 dark:border-white/20 shadow-lg">
-                    <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-200 mb-4">{{ __('app.product_details') }}</h3>
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="space-y-3">
+                <!-- Compact Product Details -->
+                <div class="backdrop-blur-sm bg-white/30 dark:bg-white/10 rounded-2xl p-4 border border-white/40 dark:border-white/20 shadow-lg">
+                    <h3 class="text-base font-semibold text-slate-900 dark:text-slate-200 mb-3">{{ __('app.product_details') }}</h3>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div class="space-y-2">
                             <div class="flex items-center justify-between">
-                                <span class="text-sm text-slate-500 dark:text-slate-400">{{ __('app.volume') }}</span>
-                                <span class="font-semibold text-slate-900 dark:text-slate-100">{{ $product->volume_ml }}ml</span>
+                                <span class="text-slate-500 dark:text-slate-400">{{ __('app.volume') }}</span>
+                                <span class="font-semibold text-slate-900 dark:text-slate-100 bg-blue-50 dark:bg-blue-900/20 px-2 py-1 rounded">{{ $product->volume_ml }}ml</span>
                             </div>
                             <div class="flex items-center justify-between">
-                                <span class="text-sm text-slate-500 dark:text-slate-400">{{ __('app.gender') }}</span>
-                                <span class="font-semibold text-slate-900 dark:text-slate-100">
+                                <span class="text-slate-500 dark:text-slate-400">{{ __('app.gender') }}</span>
+                                <span class="font-semibold text-slate-900 dark:text-slate-100 bg-purple-50 dark:bg-purple-900/20 px-2 py-1 rounded">
                                     @switch($product->gender)
                                         @case('male') {{ __('app.male') }} @break
                                         @case('female') {{ __('app.female') }} @break
@@ -148,115 +153,121 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="space-y-3">
+                        <div class="space-y-2">
                             <div class="flex items-center justify-between">
-                                <span class="text-sm text-slate-500 dark:text-slate-400">{{ __('app.status') }}</span>
-                                <span class="font-semibold text-slate-900 dark:text-slate-100">
-                                    @if($product->stock > 0)
-                                        <span class="text-green-600">
-                                            @if(app()->getLocale() === 'en')
-                                                In stock ({{ $product->stock }})
-                                            @else
-                                                Còn hàng ({{ $product->stock }})
-                                            @endif
-                                        </span>
-                                    @else
-                                        <span class="text-rose-600">{{ __('app.out_of_stock') }}</span>
-                                    @endif
-                                </span>
+                                <span class="text-slate-500 dark:text-slate-400">{{ __('app.status') }}</span>
+                                @if($product->stock > 0)
+                                    <span class="font-semibold text-green-600 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded text-xs">
+                                        @if(app()->getLocale() === 'en')
+                                            In stock ({{ $product->stock }})
+                                        @else
+                                            Còn hàng ({{ $product->stock }})
+                                        @endif
+                                    </span>
+                                @else
+                                    <span class="font-semibold text-rose-600 bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded text-xs">{{ __('app.out_of_stock') }}</span>
+                                @endif
                             </div>
                             @if($product->origin)
                                 <div class="flex items-center justify-between">
-                                    <span class="text-sm text-slate-500 dark:text-slate-400">{{ __('app.origin') }}</span>
-                                    <span class="font-semibold text-slate-900 dark:text-slate-100">{{ $product->origin }}</span>
+                                    <span class="text-slate-500 dark:text-slate-400">{{ __('app.origin') }}</span>
+                                    <span class="font-semibold text-slate-900 dark:text-slate-100 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded">{{ $product->origin }}</span>
                                 </div>
                             @endif
                         </div>
                     </div>
                 </div>
 
-                <!-- Stats Section -->
-                <div class="grid grid-cols-2 gap-4">
+                <!-- Compact Stats Section -->
+                <div class="grid grid-cols-2 gap-3">
                     <!-- Views Stats -->
-                    <div class="backdrop-blur-sm bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-6 border border-blue-100 dark:border-blue-800/30 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
-                        <div class="flex items-center gap-4">
-                            <div class="p-3 bg-blue-100 dark:bg-blue-800/30 rounded-xl">
-                                <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="backdrop-blur-sm bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-4 border border-blue-100 dark:border-blue-800/30 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-blue-100 dark:bg-blue-800/30 rounded-lg">
+                                <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wide">Lượt xem</p>
-                                <p class="text-2xl font-bold text-blue-800 dark:text-blue-200">{{ $product->formatted_views }}</p>
+                                <p class="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase">Lượt xem</p>
+                                <p class="text-lg font-bold text-blue-800 dark:text-blue-200">{{ $product->formatted_views }}</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Sales Stats -->
-                    <div class="backdrop-blur-sm bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 rounded-2xl p-6 border border-emerald-100 dark:border-emerald-800/30 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
-                        <div class="flex items-center gap-4">
-                            <div class="p-3 bg-emerald-100 dark:bg-emerald-800/30 rounded-xl">
-                                <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="backdrop-blur-sm bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 rounded-xl p-4 border border-emerald-100 dark:border-emerald-800/30 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-emerald-100 dark:bg-emerald-800/30 rounded-lg">
+                                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-xs font-medium text-emerald-600 dark:text-emerald-400 uppercase tracking-wide">Đã bán</p>
-                                <p class="text-2xl font-bold text-emerald-800 dark:text-emerald-200">{{ $product->formatted_sold }}</p>
+                                <p class="text-xs font-medium text-emerald-600 dark:text-emerald-400 uppercase">Đã bán</p>
+                                <p class="text-lg font-bold text-emerald-800 dark:text-emerald-200">{{ $product->formatted_sold }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Action Buttons Section -->
-                <div class="backdrop-blur-sm bg-white/30 dark:bg-white/10 rounded-2xl p-6 border border-white/40 dark:border-white/20 shadow-lg">
+                <!-- Compact Action Buttons -->
+                <div class="backdrop-blur-sm bg-white/30 dark:bg-white/10 rounded-2xl p-4 border border-white/40 dark:border-white/20 shadow-lg">
                     @if($product->stock > 0)
-                        <form method="POST" action="{{ route('cart.add') }}" class="space-y-4">
+                        <form method="POST" action="{{ route('cart.add') }}" class="space-y-3">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                             
+                            <!-- Compact Quantity Selector -->
                             <div class="flex items-center justify-between">
                                 <label class="text-sm font-medium text-slate-700 dark:text-slate-300">{{ __('app.quantity') }}:</label>
-                                <div class="flex items-center border border-slate-300 dark:border-slate-600 rounded-lg overflow-hidden">
-                                    <button type="button" onclick="changeQuantity(-1)" class="px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="flex items-center bg-slate-100 dark:bg-slate-700 rounded-lg overflow-hidden">
+                                    <button type="button" onclick="changeQuantity(-1)" class="px-2 py-1 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
                                         </svg>
                                     </button>
                                     <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ $product->stock }}"
-                                           class="w-16 text-center border-0 focus:ring-0 bg-transparent text-slate-900 dark:text-slate-100">
-                                    <button type="button" onclick="changeQuantity(1)" class="px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                           class="w-12 text-center border-0 focus:ring-0 bg-transparent text-slate-900 dark:text-slate-100 text-sm">
+                                    <button type="button" onclick="changeQuantity(1)" class="px-2 py-1 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                         </svg>
                                     </button>
                                 </div>
-                                <span class="text-sm text-slate-500 dark:text-slate-400">/ {{ $product->stock }}</span>
+                                <span class="text-xs text-slate-500 dark:text-slate-400">/ {{ $product->stock }}</span>
                             </div>
                             
-                            <button type="submit" class="w-full px-6 py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]">
+                            <!-- Compact Add to Cart Button -->
+                            <button type="submit" class="w-full px-4 py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] text-sm">
                                 🛒 {{ __('app.add_to_cart') }}
                             </button>
                         </form>
                         
-                        <button class="w-full px-6 py-4 border-2 border-brand-600 text-brand-600 hover:bg-brand-600 hover:text-white rounded-xl font-semibold transition-all duration-300 mt-3 hover:scale-[1.02]">
-                            ❤️ {{ __('app.add_to_wishlist') }}
-                        </button>
+                        <!-- Secondary Actions -->
+                        <div class="grid grid-cols-2 gap-2 mt-3">
+                            <button class="px-3 py-2 border border-rose-300 text-rose-600 hover:bg-rose-600 hover:text-white rounded-lg font-medium transition-all duration-300 text-xs">
+                                ❤️ {{ __('app.wishlist') }}
+                            </button>
+                            <button class="px-3 py-2 border border-blue-300 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg font-medium transition-all duration-300 text-xs">
+                                📤 {{ __('app.share') }}
+                            </button>
+                        </div>
                     @else
-                        <button class="w-full px-6 py-4 bg-slate-400 text-white rounded-xl font-semibold cursor-not-allowed" disabled>
+                        <button class="w-full px-4 py-3 bg-slate-400 text-white rounded-xl font-semibold cursor-not-allowed text-sm" disabled>
                             {{ __('app.out_of_stock') }}
                         </button>
                     @endif
 
-                    <!-- Stock Warning -->
+                    <!-- Compact Stock Warning -->
                     @if($product->stock <= 10 && $product->stock > 0)
-                        <div class="backdrop-blur-sm bg-amber-50/80 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mt-4">
-                            <div class="flex items-center gap-3">
-                                <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="bg-amber-50/80 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3 mt-3">
+                            <div class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
                                 </svg>
-                                <span class="text-amber-800 dark:text-amber-200 text-sm font-medium">Chỉ còn {{ $product->stock }} sản phẩm!</span>
+                                <span class="text-amber-800 dark:text-amber-200 text-xs font-medium">Chỉ còn {{ $product->stock }} sản phẩm!</span>
                             </div>
                         </div>
                     @endif
