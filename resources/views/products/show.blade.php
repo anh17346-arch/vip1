@@ -457,7 +457,7 @@ function buyNow() {
     // Create a form for buy now
     const form = document.createElement('form');
     form.method = 'POST';
-    form.action = `{{ route('checkout.buy-now', '') }}/${productId}`;
+    form.action = `{{ route('checkout.buy-now', $product->id) }}`;
     
     // Add CSRF token
     const csrfToken = document.querySelector('meta[name="csrf-token"]');
