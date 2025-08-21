@@ -118,7 +118,7 @@ class CheckoutController extends Controller
 
                 // Update product stock
                 $product->decrement('stock', $quantity);
-                $product->increment('sold', $quantity);
+                $product->increment('sold_count', $quantity);
             } else {
                 // Cart checkout
                 $cartItems = $user->cart()->with('product')->get();
@@ -135,7 +135,7 @@ class CheckoutController extends Controller
 
                     // Update product stock
                     $cartItem->product->decrement('stock', $cartItem->quantity);
-                    $cartItem->product->increment('sold', $cartItem->quantity);
+                    $cartItem->product->increment('sold_count', $cartItem->quantity);
                 }
 
                 // Clear cart
