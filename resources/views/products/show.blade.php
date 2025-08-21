@@ -446,3 +446,39 @@ document.addEventListener('keydown', (e) => {
 });
 </script>
 @endsection
+
+@push('scripts')
+<script>
+// Buy Now function
+function buyNow() {
+    const quantity = parseInt(document.getElementById('quantity')?.value) || 1;
+    const productId = {{ $product->id }};
+    
+    // Create a form for buy now
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = `{{ route('checkout.buy-now', '') }}/${productId}`;
+    
+    // Add CSRF token
+    const csrfToken = document.querySelector('meta[name="csrf-token"]');
+    if (csrfToken) {
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = '_token';
+        csrfInput.value = csrfToken.content;
+        form.appendChild(csrfInput);
+    }
+    
+    // Add quantity
+    const quantityInput = document.createElement('input');
+    quantityInput.type = 'hidden';
+    quantityInput.name = 'quantity';
+    quantityInput.value = quantity;
+    form.appendChild(quantityInput);
+    
+    // Submit form
+    document.body.appendChild(form);
+    form.submit();
+}
+</script>
+@endpush
