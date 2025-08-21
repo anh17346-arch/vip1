@@ -100,7 +100,7 @@
             <!-- Product Info - Right column -->
             <div class="lg:col-span-1 space-y-6">
                 <!-- Compact Header Section -->
-                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 space-y-4">
+                <div class="backdrop-blur-sm bg-white/40 dark:bg-white/10 rounded-2xl p-6 border border-white/50 dark:border-white/20 shadow-lg space-y-4">
                     <!-- Category & Brand -->
                     <div class="flex items-center gap-2">
                         <span class="inline-block px-3 py-1 bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 rounded-full text-xs font-semibold border border-brand-200 dark:border-brand-800/50">
@@ -156,8 +156,7 @@
                 </div>
 
                 <!-- Essential Product Info -->
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-4">
-                    <div class="flex flex-wrap items-center gap-2">
+                <div class="flex flex-wrap items-center gap-2 p-3 bg-slate-50/80 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
                     <!-- Volume -->
                     <span class="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded text-xs font-medium">
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -201,12 +200,10 @@
                             {{ $product->origin }}
                         </span>
                     @endif
-                    </div>
                 </div>
 
                 <!-- Mini Stats Section -->
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-4">
-                    <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between p-3 bg-slate-50/80 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
                     <!-- Views -->
                     <div class="flex items-center gap-2">
                         <svg class="w-3 h-3 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
