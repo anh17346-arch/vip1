@@ -299,6 +299,15 @@ Route::middleware('auth')->group(function () {
         Route::post('/process', [App\Http\Controllers\CheckoutController::class, 'process'])->name('process');
         Route::get('/success/{order}', [App\Http\Controllers\CheckoutController::class, 'success'])->name('success');
     });
+
+    // Order management routes
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::get('/', [App\Http\Controllers\OrderController::class, 'index'])->name('index');
+        Route::get('/{order}', [App\Http\Controllers\OrderController::class, 'show'])->name('show');
+        Route::patch('/{order}/cancel', [App\Http\Controllers\OrderController::class, 'cancel'])->name('cancel');
+        Route::post('/{order}/reorder', [App\Http\Controllers\OrderController::class, 'reorder'])->name('reorder');
+        Route::get('/{order}/invoice', [App\Http\Controllers\OrderController::class, 'invoice'])->name('invoice');
+    });
     
     // Profile management
     Route::prefix('tai-khoan')->name('profile.')->group(function () {
