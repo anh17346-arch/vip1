@@ -53,6 +53,9 @@ class Order extends Model
      */
     public function getFormattedTotalAttribute()
     {
+        if (app()->getLocale() === 'en') {
+            return '$' . number_format($this->total / 25000, 2);
+        }
         return number_format($this->total, 0, ',', '.') . 'đ';
     }
 
@@ -61,6 +64,9 @@ class Order extends Model
      */
     public function getFormattedSubtotalAttribute()
     {
+        if (app()->getLocale() === 'en') {
+            return '$' . number_format($this->subtotal / 25000, 2);
+        }
         return number_format($this->subtotal, 0, ',', '.') . 'đ';
     }
 
@@ -69,6 +75,9 @@ class Order extends Model
      */
     public function getFormattedShippingFeeAttribute()
     {
+        if (app()->getLocale() === 'en') {
+            return '$' . number_format($this->shipping_fee / 25000, 2);
+        }
         return number_format($this->shipping_fee, 0, ',', '.') . 'đ';
     }
 
@@ -107,12 +116,12 @@ class Order extends Model
     public function getStatusDisplayAttribute()
     {
         return match($this->status) {
-            'pending' => 'Chờ xử lý',
-            'processing' => 'Đang xử lý',
-            'shipped' => 'Đã gửi hàng',
-            'delivered' => 'Đã giao hàng',
-            'cancelled' => 'Đã hủy',
-            default => 'Không xác định',
+            'pending' => __('app.pending'),
+            'processing' => __('app.processing'),
+            'shipped' => __('app.shipped'),
+            'delivered' => __('app.delivered'),
+            'cancelled' => __('app.cancelled'),
+            default => __('app.unknown'),
         };
     }
 
@@ -122,11 +131,11 @@ class Order extends Model
     public function getPaymentStatusDisplayAttribute()
     {
         return match($this->payment_status) {
-            'pending' => 'Chờ thanh toán',
-            'processing' => 'Đang xử lý',
-            'paid' => 'Đã thanh toán',
-            'failed' => 'Thanh toán thất bại',
-            default => 'Không xác định',
+            'pending' => __('app.payment_pending'),
+            'processing' => __('app.payment_processing'),
+            'paid' => __('app.payment_paid'),
+            'failed' => __('app.payment_failed'),
+            default => __('app.unknown'),
         };
     }
 
@@ -136,11 +145,11 @@ class Order extends Model
     public function getPaymentMethodDisplayAttribute()
     {
         return match($this->payment_method) {
-            'momo' => 'Ví MoMo',
-            'zalopay' => 'ZaloPay',
-            'bank_transfer' => 'Chuyển khoản ngân hàng',
-            'cod' => 'Thanh toán khi nhận hàng',
-            default => 'Không xác định',
+            'momo' => __('app.momo_wallet'),
+            'zalopay' => __('app.zalopay_wallet'),
+            'bank_transfer' => __('app.bank_transfer'),
+            'cod' => __('app.cash_on_delivery'),
+            default => __('app.unknown'),
         };
     }
 }

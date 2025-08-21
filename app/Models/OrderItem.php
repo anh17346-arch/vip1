@@ -43,6 +43,9 @@ class OrderItem extends Model
      */
     public function getFormattedPriceAttribute()
     {
+        if (app()->getLocale() === 'en') {
+            return '$' . number_format($this->price / 25000, 2);
+        }
         return number_format($this->price, 0, ',', '.') . 'đ';
     }
 
@@ -51,6 +54,9 @@ class OrderItem extends Model
      */
     public function getFormattedTotalAttribute()
     {
+        if (app()->getLocale() === 'en') {
+            return '$' . number_format($this->total / 25000, 2);
+        }
         return number_format($this->total, 0, ',', '.') . 'đ';
     }
 }

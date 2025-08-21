@@ -267,4 +267,9 @@ return [
     'not_shipped' => 'Chưa gửi hàng',
     'delivery_completed' => 'Giao hàng thành công',
     'not_delivered' => 'Chưa giao hàng',
+    'unknown' => 'Không xác định',
+    'momo_wallet' => 'Ví MoMo',
+    'zalopay_wallet' => 'ZaloPay',
+    'bank_transfer' => 'Chuyển khoản ngân hàng',
+    'cash_on_delivery' => 'Thanh toán khi nhận hàng',
 ];

@@ -267,4 +267,9 @@ return [
     'not_shipped' => 'Not shipped yet',
     'delivery_completed' => 'Delivery completed',
     'not_delivered' => 'Not delivered yet',
+    'unknown' => 'Unknown',
+    'momo_wallet' => 'MoMo Wallet',
+    'zalopay_wallet' => 'ZaloPay Wallet',
+    'bank_transfer' => 'Bank Transfer',
+    'cash_on_delivery' => 'Cash on Delivery',
 ];

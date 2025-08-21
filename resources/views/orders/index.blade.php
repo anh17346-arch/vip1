@@ -119,28 +119,28 @@
 
     <!-- Orders List -->
     @if($orders->count() > 0)
-        <div class="space-y-6">
+        <div class="space-y-4">
             @foreach($orders as $order)
-                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-lg transition-all duration-300">
-                    <!-- Order Header -->
-                    <div class="p-6 border-b border-slate-200 dark:border-slate-700">
-                        <div class="flex flex-wrap items-center justify-between gap-4">
-                            <div class="flex items-center gap-4">
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-lg transition-all duration-300">
+                    <!-- Compact Order Header -->
+                    <div class="p-4">
+                        <div class="flex flex-wrap items-center justify-between gap-3">
+                            <div class="flex items-center gap-3">
                                 <div>
-                                    <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">
-                                        {{ __('app.order') }} #{{ $order->order_number }}
+                                    <h3 class="text-base font-semibold text-slate-900 dark:text-slate-100">
+                                        #{{ $order->order_number }}
                                     </h3>
-                                    <p class="text-sm text-slate-600 dark:text-slate-400">
+                                    <p class="text-xs text-slate-600 dark:text-slate-400">
                                         {{ $order->created_at->format('d/m/Y H:i') }}
                                     </p>
                                 </div>
                                 
-                                <!-- Status Badges -->
-                                <div class="flex gap-2">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $order->status_badge_class }}">
+                                <!-- Compact Status Badges -->
+                                <div class="flex gap-1">
+                                    <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium {{ $order->status_badge_class }}">
                                         {{ $order->status_display }}
                                     </span>
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $order->payment_status_badge_class }}">
+                                    <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium {{ $order->payment_status_badge_class }}">
                                         {{ $order->payment_status_display }}
                                     </span>
                                 </div>
@@ -148,40 +148,33 @@
                             
                             <div class="text-right">
                                 <p class="text-lg font-bold text-slate-900 dark:text-slate-100">{{ $order->formatted_total }}</p>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">{{ $order->payment_method_display }}</p>
+                                <p class="text-xs text-slate-600 dark:text-slate-400">{{ $order->payment_method_display }}</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Order Items Preview -->
-                    <div class="p-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                            @foreach($order->items->take(3) as $item)
-                                <div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-700 rounded-lg">
-                                    <img src="{{ $item->product->main_image_url }}" alt="{{ $item->product->name }}" 
-                                         class="w-12 h-12 object-cover rounded-lg">
-                                    <div class="flex-1 min-w-0">
-                                        <h4 class="font-medium text-slate-900 dark:text-slate-100 truncate text-sm">{{ $item->product->display_name }}</h4>
-                                        <p class="text-xs text-slate-600 dark:text-slate-400">{{ $item->formatted_price }} × {{ $item->quantity }}</p>
-                                    </div>
-                                </div>
+                    <!-- Compact Order Items & Actions -->
+                    <div class="px-4 pb-4">
+                        <!-- Mini Items Preview -->
+                        <div class="flex items-center gap-2 mb-3">
+                            @foreach($order->items->take(4) as $item)
+                                <img src="{{ $item->product->main_image_url }}" alt="{{ $item->product->name }}" 
+                                     class="w-8 h-8 object-cover rounded border-2 border-white dark:border-slate-700">
                             @endforeach
-                            
-                            @if($order->items->count() > 3)
-                                <div class="flex items-center justify-center p-3 bg-slate-50 dark:bg-slate-700 rounded-lg">
-                                    <span class="text-sm text-slate-600 dark:text-slate-400">
-                                        +{{ $order->items->count() - 3 }} {{ __('app.more_products') }}
-                                    </span>
+                            @if($order->items->count() > 4)
+                                <div class="w-8 h-8 bg-slate-100 dark:bg-slate-700 rounded flex items-center justify-center">
+                                    <span class="text-xs font-medium text-slate-600 dark:text-slate-400">+{{ $order->items->count() - 4 }}</span>
                                 </div>
                             @endif
+                            <span class="text-xs text-slate-600 dark:text-slate-400 ml-2">{{ $order->items->count() }} {{ __('app.products') }}</span>
                         </div>
 
-                        <!-- Order Actions -->
-                        <div class="flex flex-wrap gap-3 pt-4 border-t border-slate-200 dark:border-slate-700">
+                        <!-- Compact Actions -->
+                        <div class="flex flex-wrap gap-2">
                             <!-- View Details -->
                             <a href="{{ route('orders.show', $order) }}" 
-                               class="inline-flex items-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg font-medium transition-all duration-300 text-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                               class="inline-flex items-center gap-1 px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white rounded-lg font-medium transition-all duration-300 text-xs">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                 </svg>
@@ -194,8 +187,8 @@
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit" onclick="return confirm('{{ __('app.confirm_cancel_order') }}')"
-                                            class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-all duration-300 text-sm">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            class="inline-flex items-center gap-1 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-all duration-300 text-xs">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                         </svg>
                                         {{ __('app.cancel_order') }}
@@ -208,23 +201,14 @@
                                 <form method="POST" action="{{ route('orders.reorder', $order) }}" class="inline">
                                     @csrf
                                     <button type="submit"
-                                            class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition-all duration-300 text-sm">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            class="inline-flex items-center gap-1 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition-all duration-300 text-xs">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                                         </svg>
                                         {{ __('app.reorder') }}
                                     </button>
                                 </form>
                             @endif
-
-                            <!-- Download Invoice -->
-                            <a href="{{ route('orders.invoice', $order) }}" 
-                               class="inline-flex items-center gap-2 px-4 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg font-medium transition-all duration-300 text-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                </svg>
-                                {{ __('app.invoice') }}
-                            </a>
                         </div>
                     </div>
                 </div>
