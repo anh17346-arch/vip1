@@ -22,7 +22,7 @@ class CheckoutController extends Controller
 
         if ($user) {
             // Get cart items for authenticated user
-            $cartItems = $user->cartItems()->with('product')->get();
+            $cartItems = $user->cart()->with('product')->get();
             $total = $cartItems->sum(function ($item) {
                 return $item->quantity * $item->product->final_price;
             });
@@ -121,7 +121,7 @@ class CheckoutController extends Controller
                 $product->increment('sold', $quantity);
             } else {
                 // Cart checkout
-                $cartItems = $user->cartItems()->with('product')->get();
+                $cartItems = $user->cart()->with('product')->get();
                 
                 foreach ($cartItems as $cartItem) {
                     $order->items()->create([
@@ -139,7 +139,7 @@ class CheckoutController extends Controller
                 }
 
                 // Clear cart
-                $user->cartItems()->delete();
+                $user->cart()->delete();
             }
 
             // Update order totals
