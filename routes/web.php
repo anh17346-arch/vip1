@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\SearchController;
@@ -409,4 +410,9 @@ Route::middleware(['auth', 'admin'])
                 ]);
             }
         })->name('test.db.constraints');
+        
+        // Promotions CRUD (admin only)
+        Route::resource('promotions', PromotionController::class);
+        Route::post('/promotions/{promotion}/toggle-status', [PromotionController::class, 'toggleStatus'])->name('promotions.toggle-status');
+        Route::get('/promotions/generate-code', [PromotionController::class, 'generateCode'])->name('promotions.generate-code');
     });
