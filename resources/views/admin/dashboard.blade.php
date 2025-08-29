@@ -205,6 +205,56 @@
         </div>
       </div>
     </div>
+
+    <!-- Promotions Management -->
+    <div class="backdrop-blur-md bg-white/20 dark:bg-white/5 rounded-2xl shadow-lg border border-white/30 dark:border-white/10 overflow-hidden">
+      <div class="p-6 border-b border-slate-200/60 dark:border-slate-700">
+        <div>
+          <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100">Quản lý khuyến mãi</h2>
+          <p class="text-slate-600 dark:text-slate-400 mt-1">Quản lý các chương trình khuyến mãi cho sản phẩm</p>
+        </div>
+      </div>
+      
+      <div class="p-6">
+        <div class="space-y-4">
+          <a href="{{ route('admin.promotions.index') }}" 
+             class="group flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-pink-50/50 to-rose-50/50 dark:from-pink-900/20 dark:to-rose-900/20 border border-pink-200/30 dark:border-pink-700/30 hover:from-pink-100 hover:to-rose-100 dark:hover:from-pink-800/40 dark:hover:to-rose-800/40 hover:border-pink-300 dark:hover:border-pink-600 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg backdrop-blur-sm">
+            <div class="flex items-center">
+              <div class="p-2 rounded-lg bg-pink-100 dark:bg-pink-900/20 group-hover:bg-pink-200 dark:group-hover:bg-pink-800/40 group-hover:scale-110 transition-all duration-300">
+                <svg class="w-5 h-5 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="font-medium text-slate-900 dark:text-slate-100">Quản lý khuyến mãi</p>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Duyệt và quản lý chương trình khuyến mãi</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+          
+          <a href="{{ route('admin.promotions.create') }}" 
+             class="group flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-emerald-50/50 to-green-50/50 dark:from-emerald-900/20 dark:to-green-900/20 border border-emerald-200/30 dark:border-emerald-700/30 hover:from-emerald-100 hover:to-green-100 dark:hover:from-emerald-800/40 dark:hover:to-green-800/40 hover:border-emerald-300 dark:hover:border-emerald-600 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg backdrop-blur-sm">
+            <div class="flex items-center">
+              <div class="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/20 group-hover:bg-emerald-200 dark:group-hover:bg-emerald-800/40 group-hover:scale-110 transition-all duration-300">
+                <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="font-medium text-slate-900 dark:text-slate-100">Tạo khuyến mãi mới</p>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Thêm chương trình khuyến mãi mới</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Quick Actions -->
