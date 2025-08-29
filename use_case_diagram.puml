@@ -1,0 +1,60 @@
+@startuml Use Case Diagram
+
+!theme plain
+skinparam backgroundColor black
+skinparam actor {
+    BackgroundColor white
+    BorderColor black
+    FontColor black
+}
+skinparam usecase {
+    BackgroundColor white
+    BorderColor black
+    FontColor black
+}
+skinparam arrow {
+    Color white
+}
+
+actor "Quản trị viên" as Admin
+actor "Khách hàng" as Customer
+
+rectangle "UC" {
+    usecase "ĐĂNG NHẬP" as Login
+    
+    usecase "Quản lý sản phẩm" as ProductManagement
+    usecase "Quản lý đơn hàng" as OrderManagement
+    usecase "Quản lý khuyến mãi" as PromotionManagement
+    usecase "Thống kê" as Statistics
+    
+    usecase "Quản lý tài khoản" as AccountManagement
+    usecase "Quản lý đơn mua" as PurchaseOrderManagement
+    usecase "Quản lý giỏ hàng" as ShoppingCartManagement
+    usecase "Đặt hàng" as PlaceOrder
+    usecase "Tìm kiếm sản phẩm" as SearchProduct
+    usecase "Đăng ký" as Register
+}
+
+' Actor associations
+Admin --> ProductManagement
+Admin --> OrderManagement
+Admin --> PromotionManagement
+Admin --> Statistics
+
+Customer --> AccountManagement
+Customer --> PurchaseOrderManagement
+Customer --> ShoppingCartManagement
+Customer --> PlaceOrder
+Customer --> SearchProduct
+Customer --> Register
+
+' Include relationships
+ProductManagement ..> Login : <<include>>
+OrderManagement ..> Login : <<include>>
+PromotionManagement ..> Login : <<include>>
+AccountManagement ..> Login : <<include>>
+PurchaseOrderManagement ..> Login : <<include>>
+ShoppingCartManagement ..> Login : <<include>>
+PlaceOrder ..> Login : <<include>>
+
+@enduml
