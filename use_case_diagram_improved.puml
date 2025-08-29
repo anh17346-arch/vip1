@@ -21,10 +21,6 @@ skinparam rectangle {
 
 title HỆ THỐNG WEBSITE BÁN NƯỚC HOA
 
-' Layout hints for better positioning
-skinparam nodesep 100
-skinparam ranksep 80
-
 rectangle "UC" {
     ' Actors positioned exactly like in the image
     :Admin: as admin
