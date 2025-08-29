@@ -21,33 +21,39 @@ skinparam rectangle {
 
 title HỆ THỐNG WEBSITE BÁN NƯỚC HOA
 
+' Layout hints for better positioning
+left to right direction
+top to bottom direction
+skinparam nodesep 80
+skinparam ranksep 60
+
 rectangle "UC" {
     ' Actors positioned exactly like in the image
-    :Admin: as admin #left
-    :Khách hàng: as customer #right
-    :Khách vãng lai: as guest #right
+    :Admin: as admin
+    :Khách hàng: as customer
+    :Khách vãng lai: as guest
 
     ' Generalization relationship - EXACTLY like in the image
     customer -|> guest
 
     ' Central Login Use Case - positioned in center
-    (ĐĂNG NHẬP) as login #center
+    (ĐĂNG NHẬP) as login
 
     ' Admin Use Cases - left side, vertical arrangement (stacked)
-    (Quản lý sản phẩm) as manage_products #left
-    (Quản lý đơn hàng) as manage_orders #left
-    (Quản lý khuyến mãi) as manage_promotions #left
-    (Thống kê) as statistics #left
+    (Quản lý sản phẩm) as manage_products
+    (Quản lý đơn hàng) as manage_orders
+    (Quản lý khuyến mãi) as manage_promotions
+    (Thống kê) as statistics
 
     ' Customer Use Cases - right side, vertical arrangement (stacked)
-    (Quản lý tài khoản) as manage_account #right
-    (Quản lý đơn mua) as manage_purchases #right
-    (Quản lý giỏ hàng) as manage_cart #right
-    (Đặt hàng) as place_order #right
+    (Quản lý tài khoản) as manage_account
+    (Quản lý đơn mua) as manage_purchases
+    (Quản lý giỏ hàng) as manage_cart
+    (Đặt hàng) as place_order
 
     ' Guest Use Cases - bottom right, below customer use cases
-    (Tìm kiếm sản phẩm) as search_products #right
-    (Đăng ký) as register #right
+    (Tìm kiếm sản phẩm) as search_products
+    (Đăng ký) as register
 
     ' Admin relationships - solid lines
     admin --> manage_products
