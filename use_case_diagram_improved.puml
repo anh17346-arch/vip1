@@ -1,0 +1,79 @@
+@startuml HỆ THỐNG WEBSITE BÁN NƯỚC HOA
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam usecase {
+    BackgroundColor #FFFFFF
+    BorderColor #000000
+    FontColor #000000
+    FontSize 12
+}
+skinparam actor {
+    BackgroundColor #FFFFFF
+    BorderColor #000000
+    FontColor #000000
+    FontSize 12
+}
+skinparam rectangle {
+    BorderColor #000000
+    FontColor #000000
+    FontSize 14
+}
+
+title HỆ THỐNG WEBSITE BÁN NƯỚC HOA
+
+rectangle "UC" {
+    ' Actors positioned exactly like in the image
+    :Admin: as admin
+    :Khách hàng: as customer
+    :Khách vãng lai: as guest
+
+    ' Generalization relationship - EXACTLY like in the image
+    customer -|> guest
+
+    ' Central Login Use Case - positioned in center
+    (ĐĂNG NHẬP) as login
+
+    ' Admin Use Cases - left side, vertical arrangement (stacked)
+    (Quản lý sản phẩm) as manage_products
+    (Quản lý đơn hàng) as manage_orders
+    (Quản lý khuyến mãi) as manage_promotions
+    (Thống kê) as statistics
+
+    ' Customer Use Cases - right side, vertical arrangement (stacked)
+    (Quản lý tài khoản) as manage_account
+    (Quản lý đơn mua) as manage_purchases
+    (Quản lý giỏ hàng) as manage_cart
+    (Đặt hàng) as place_order
+
+    ' Guest Use Cases - bottom right, below customer use cases
+    (Tìm kiếm sản phẩm) as search_products
+    (Đăng ký) as register
+
+    ' Admin relationships - solid lines
+    admin --> manage_products
+    admin --> manage_orders
+    admin --> manage_promotions
+    admin --> statistics
+
+    ' Customer relationships - solid lines
+    customer --> manage_account
+    customer --> manage_purchases
+    customer --> manage_cart
+    customer --> place_order
+
+    ' Guest relationships - solid lines
+    guest --> search_products
+    guest --> register
+
+    ' Include relationships - dashed lines with <<include>> stereotype
+    manage_products ..> login : <<include>>
+    manage_orders ..> login : <<include>>
+    manage_promotions ..> login : <<include>>
+    statistics ..> login : <<include>>
+    manage_account ..> login : <<include>>
+    manage_purchases ..> login : <<include>>
+    manage_cart ..> login : <<include>>
+    place_order ..> login : <<include>>
+}
+
+@enduml
